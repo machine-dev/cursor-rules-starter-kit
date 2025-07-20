@@ -1,0 +1,397 @@
+# 🎯 Generative BI - Cursorルール管理システム
+
+**策定日**: 2025年7月20日  
+**役割**: Cursor Rules全体の制御・参照管理  
+**重要度**: CRITICAL - 必ず最初に参照
+
+## 🚀 このファイルの役割
+
+### エントリーポイント機能
+- **最初の参照**: Cursorが最初に確認するルールファイル
+- **参照制御**: ユーザー指示に基づき適切なルールファイルへ誘導
+- **構造管理**: 全体の.mdcファイル構造を統制
+
+### スケーラブル設計
+- **拡張性**: 新しいルールファイル追加への対応
+- **効率性**: 必要なルールのみを動的に参照
+- **保守性**: 一元管理による簡単なメンテナンス
+
+---
+
+## 📋 参照制御システム
+
+### 🔴 **常時参照（alwaysApply: true）**
+
+#### 1. **mdc-metadata-manager.mdc** - 本ファイル
+- **役割**: エントリーポイント・参照制御
+- **参照タイミング**: 全ての操作で最初に参照
+
+#### 2. **mdc-creation-guidelines.mdc**
+- **役割**: .mdcファイル作成の品質基準
+- **参照タイミング**: .mdcファイル関連作業時
+
+#### 3. **project-starter-kit.mdc**
+- **役割**: 新規プロジェクト用スターターキット
+- **参照タイミング**: 新規プロジェクト導入時
+
+#### 4. **core/project-overview.mdc**
+- **役割**: Generative BIプロジェクト基盤情報
+- **参照タイミング**: プロジェクト全体に関わる作業時
+
+#### 5. **core/commit-rules.mdc**
+- **役割**: Git操作の品質管理
+- **参照タイミング**: コミット・プッシュ作業時
+
+#### 6. **core/cursorrules.mdc**
+- **役割**: Cursor AI基本動作ルール
+- **参照タイミング**: 全ての操作時
+
+#### 7. **implementation/logging/implementation-log-rules.mdc**
+- **役割**: 実装ログ作成・管理
+- **参照タイミング**: 実装完了時、進捗記録時
+
+### 🟠 **動的参照（alwaysApply: false）**
+
+#### 開発・実装関連
+```yaml
+development/workflows/:
+  - dependency-separation-workflow.mdc  # 依存関係分離時
+  - progress-tracking-workflow.mdc      # 進捗管理時
+  - recomended_workflow.mdc            # 推奨ワークフロー時
+
+development/guidelines/:
+  - development-guidelines.mdc         # 開発作業時
+  - security-guidelines.mdc           # セキュリティ関連時
+  - tech-stack-specific.mdc           # 技術選定時
+
+development/patterns/:
+  - architecture-patterns.mdc         # アーキテクチャ設計時
+```
+
+#### 実装・品質関連
+```yaml
+implementation/llm/:
+  - design-guidelines.mdc             # LLM設計時
+  - implementation-guide.mdc          # LLM実装時
+
+implementation/quality/:
+  - deliverables-checklist.mdc        # 成果物提出時
+  - revvise-rules.mdc                 # コード修正時
+
+implementation/logging/:
+  - implementation-log-rules.mdc      # ログ作成時
+  - implementation-log-stock.mdc      # ログ蓄積時
+```
+
+#### システム・管理関連
+```yaml
+system/:
+  - cursor-limitations.mdc            # 制限事項対応時
+
+scripts/:
+  - cursor-rules-setup.sh             # 新規プロジェクト初期化時
+  - validate-structure.sh             # 構造検証時
+  - generate-report.sh                # レポート生成時
+```
+
+---
+
+## 🎯 ユーザー指示別参照マトリックス
+
+### 📝 .mdcファイル関連指示
+```yaml
+指示パターン:
+  - "新しいルールを作成"
+  - "ルールを修正"
+  - "ガイドライン作成"
+
+必須参照:
+  - mdc-creation-guidelines.mdc (作成基準)
+  - mdc-file-storage-rules.md (格納場所)
+
+条件参照:
+  - 関連する既存ルールファイル
+```
+
+### 🚀 新規プロジェクト関連指示
+```yaml
+指示パターン:
+  - "新しいプロジェクトを開始"
+  - "プロジェクトスターターキット"
+  - "Cursorルールシステムを導入"
+
+必須参照:
+  - project-starter-kit.mdc (スターターキット)
+  - QUICKSTART.md (クイックスタートガイド)
+  - scripts/cursor-rules-setup.sh (自動セットアップ)
+
+条件参照:
+  - 技術スタック固有のテンプレート
+  - チーム規模対応ルール
+```
+
+### 🔧 開発・実装指示
+```yaml
+指示パターン:
+  - "機能を実装"
+  - "バグを修正"
+  - "コードを改善"
+
+必須参照:
+  - development/workflows/recommended_workflow.mdc
+  - core/commit-rules.mdc
+
+条件参照:
+  - dependency-separation-workflow.mdc (依存関係変更時)
+  - security-guidelines.mdc (セキュリティ要素時)
+  - tech-stack-specific.mdc (技術固有作業時)
+```
+
+### 🏗️ アーキテクチャ・設計指示
+```yaml
+指示パターン:
+  - "アーキテクチャを設計"
+  - "システム構成を変更"
+  - "設計パターンを適用"
+
+必須参照:
+  - development/patterns/architecture-patterns.mdc
+  - core/project-overview.mdc
+
+条件参照:
+  - security-guidelines.mdc (セキュリティ設計時)
+```
+
+### 🤖 AI・LLM関連指示
+```yaml
+指示パターン:
+  - "プロンプトを作成"
+  - "LLM機能を実装"
+  - "AI機能を改善"
+
+必須参照:
+  - implementation/llm/design-guidelines.mdc
+  - implementation/llm/implementation-guide.mdc
+
+条件参照:
+  - security-guidelines.mdc (AI セキュリティ時)
+```
+
+### 📊 プロジェクト管理・実装ログ指示
+```yaml
+指示パターン:
+  - "進捗を報告"
+  - "実装ログを作成"
+  - "タスクを管理"
+  - "実装完了"
+  - "動作確認できました"
+  - "問題ありません"
+
+必須参照:
+  - implementation/logging/implementation-log-rules.mdc (実装ログ作成)
+  - development/workflows/progress-tracking-workflow.mdc (進捗管理)
+
+条件参照:
+  - implementation/logging/implementation-log-stock.mdc (知識蓄積時)
+  - templates/implementation-log-template.md (ログ作成時)
+```
+
+### 🚨 エラー・トラブル対応指示
+```yaml
+指示パターン:
+  - "エラーを解決"
+  - "問題をデバッグ"
+  - "制限事項を回避"
+
+必須参照:
+  - system/cursor-limitations.mdc
+
+条件参照:
+  - 問題領域に関連する専門ルール
+```
+
+### 🔍 システム管理・検証指示
+```yaml
+指示パターン:
+  - "システム状況を確認"
+  - "ルール品質をチェック"
+  - "レポートを生成"
+
+必須参照:
+  - scripts/validate-structure.sh (構造検証)
+  - scripts/generate-report.sh (レポート生成)
+
+条件参照:
+  - 関連する管理・監視ルール
+```
+
+---
+
+## 📁 ディレクトリ構造管理
+
+### 現在の標準構造
+```
+.cursor/rules/
+├── mdc-metadata-manager.mdc           # 🎯 エントリーポイント (alwaysApply: true)
+├── mdc-creation-guidelines.mdc        # 📝 作成ガイド (alwaysApply: true)
+├── mdc-file-storage-rules.md          # 📁 格納ルール
+├── project-starter-kit.mdc           # 🚀 スターターキット (alwaysApply: true)
+├── QUICKSTART.md                      # 📖 クイックスタートガイド
+├── README.md                          # 📚 概要・ナビゲーション
+├── core/                              # 🏛️ 核心ルール
+│   ├── cursorrules.mdc               # (alwaysApply: true)
+│   ├── commit-rules.mdc              # (alwaysApply: true)
+│   └── project-overview.mdc          # (alwaysApply: true)
+├── development/                       # 🔧 開発関連
+│   ├── guidelines/
+│   ├── patterns/
+│   └── workflows/
+├── implementation/                    # 🛠️ 実装関連  
+│   ├── llm/
+│   ├── quality/
+│   └── logging/
+│       ├── implementation-log-rules.mdc  # (alwaysApply: true)
+│       └── implementation-log-stock.mdc  # (alwaysApply: false)
+├── system/                           # ⚙️ システム関連
+├── scripts/                          # 🔧 スクリプト・ツール
+│   ├── cursor-rules-setup.sh        # 新規プロジェクト初期化
+│   ├── validate-structure.sh        # 構造検証
+│   └── generate-report.sh           # レポート生成
+└── templates/                        # 📋 テンプレート集
+    ├── tech-stack/                   # 技術スタック固有
+    ├── team-structure/               # チーム構成対応
+    └── implementation-log-template.md # 実装ログテンプレート
+```
+
+### 新規ルール追加プロセス
+1. **mdc-creation-guidelines.mdc**で作成基準確認
+2. **適切なディレクトリ**への配置決定
+3. **本ファイル**への参照情報追加
+4. **alwaysApply設定**の適切な判断
+
+---
+
+## 🔄 動的参照システム
+
+### 参照判定ロジック
+```yaml
+ステップ1: ユーザー指示の分析
+  - キーワード抽出
+  - 作業カテゴリ判定
+  - 緊急度・重要度評価
+
+ステップ2: 必須参照ルールの特定
+  - 常時参照ルール（alwaysApply: true）
+  - 指示カテゴリ別必須ルール
+
+ステップ3: 条件参照ルールの判定
+  - 作業内容に応じた専門ルール
+  - セキュリティ・品質関連ルール
+  - 技術スタック固有ルール
+
+ステップ4: 参照順序の最適化
+  - 重要度順の参照
+  - 依存関係を考慮した順序
+  - 効率的な情報収集
+```
+
+### 参照効率化機能
+```yaml
+キャッシュ機能:
+  - 頻繁に参照されるルールの優先読み込み
+  - セッション内での参照履歴管理
+
+動的調整:
+  - ユーザーの作業パターン学習
+  - プロジェクトフェーズに応じた最適化
+
+エラー予防:
+  - 矛盾するルールの事前検出
+  - 不完全な参照の防止
+```
+
+---
+
+## 📊 管理・監視機能
+
+### 参照状況モニタリング
+```bash
+# 全ルールファイルの参照頻度確認
+find .cursor/rules -name "*.mdc" -exec echo "=== {} ===" \; \
+  -exec grep -c "alwaysApply\|description" {} \;
+
+# alwaysApply設定の一覧
+grep -r "alwaysApply:" .cursor/rules/ --include="*.mdc" | sort
+
+# 設定なしファイルの検出
+find .cursor/rules -name "*.mdc" -exec grep -L "alwaysApply:" {} \;
+```
+
+### 品質チェック機能
+```bash
+# システム全体の構造・品質チェック
+./.cursor/rules/scripts/validate-structure.sh
+
+# 包括的なシステム状況レポート生成
+./.cursor/rules/scripts/generate-report.sh
+```
+
+---
+
+## 🎯 期待される効果
+
+### ✅ **参照効率の向上**
+- **最適化**: 必要なルールのみを動的参照
+- **高速化**: エントリーポイントからの効率的なナビゲーション
+- **スケーラビリティ**: ルール数増加への対応
+
+### ✅ **管理の簡素化**
+- **一元管理**: 参照制御の統一
+- **保守性**: 構造変更への柔軟な対応
+- **透明性**: 参照関係の明確化
+
+### ✅ **品質の向上**
+- **一貫性**: 統一された参照基準
+- **正確性**: 適切なルールの確実な適用
+- **完全性**: 見落としの防止
+
+### ✅ **新規プロジェクト対応**
+- **迅速導入**: スターターキットによる10分以内導入
+- **品質保証**: 自動バリデーション・レポート機能
+- **スケーラビリティ**: 任意の技術スタック・チーム構成への対応
+
+---
+
+## 📚 関連ファイル
+
+### 必須関連ファイル
+- [mdc-creation-guidelines.mdc](./mdc-creation-guidelines.mdc): .mdcファイル作成ガイドライン
+- [mdc-file-storage-rules.md](./mdc-file-storage-rules.md): ファイル格納場所管理
+- [project-starter-kit.mdc](./project-starter-kit.mdc): 新規プロジェクト用スターターキット
+
+### スターターキット関連
+- [QUICKSTART.md](./QUICKSTART.md): 10分間クイックスタートガイド
+- [scripts/cursor-rules-setup.sh](./scripts/cursor-rules-setup.sh): 自動初期化スクリプト
+- [scripts/validate-structure.sh](./scripts/validate-structure.sh): 構造・品質検証
+- [scripts/generate-report.sh](./scripts/generate-report.sh): システム状況レポート
+
+### 主要参照先
+- [core/cursorrules.mdc](./core/cursorrules.mdc): Cursor基本動作ルール
+- [core/project-overview.mdc](./core/project-overview.mdc): プロジェクト概要
+- [core/commit-rules.mdc](./core/commit-rules.mdc): Git管理ルール
+
+---
+
+## 📝 更新履歴
+
+| 日付 | 更新内容 | 更新者 |
+|------|----------|--------|
+| 2025-07-20 | project-starter-kit.mdc追加、スクリプト統合、新規プロジェクト対応強化 | AI Assistant |
+| 2025-07-20 | エントリーポイント化、階層移動、動的参照システム構築 | AI Assistant |
+
+**次回見直し予定**: 2025-08-20  
+**管理者**: プロジェクト管理者
+
+---
+
+**🎯 重要**: このファイルはCursor Rulesシステムの中核です。全ての.mdc関連作業は、このファイルを起点として実行されます。新規プロジェクトでの導入は project-starter-kit.mdc を参照してください。
